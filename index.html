@@ -1,31 +1,153 @@
 
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RAN Exclusive</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: #000;
+      color: #fff;
+    }
+    header {
+      position: relative;
+      height: 100vh;
+      text-align: center;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    header video {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+    .logo {
+      font-size: 2.8em;
+      font-weight: bold;
+      text-shadow: 1px 1px 5px #000;
+    }
+    .bienvenida {
+      font-size: 1.2em;
+      margin: 10px 0 20px;
+      text-shadow: 1px 1px 5px #000;
+    }
+    .menu {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .menu button {
+      background: #111212;
+      color: #fff;
+      border: none;
+      padding: 12px 20px;
+      font-size: 1em;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+    .menu button:hover {
+      background: #101010;
+    }
+    .seccion {
+      display: none;
+      padding: 30px 10px;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .productos {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .producto {
+      background: #111;
+      border-radius: 10px;
+      padding: 15px;
+      width: 90%;
+      max-width: 280px;
+      text-align: center;
+    }
+    .producto img {
+      width: 100%;
+      border-radius: 5px;
+    }
+    select, input, .add-btn {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      border: none;
+      font-size: 1em;
+    }
+    .add-btn {
+      background: #171717;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .add-btn:hover {
+      background: #0e0e0e;
+    }
+    .cart-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #101010;
+      border: none;
+      padding: 15px;
+      border-radius: 50%;
+      font-size: 1.5em;
+      cursor: pointer;
+      color: white;
+      z-index: 1000;
+    }
+    .cart-box {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      background: #222;
+      padding: 15px;
+      border-radius: 8px;
+      max-width: 90%;
+      max-height: 60vh;
+      overflow-y: auto;
+      display: none;
+      color: #fff;
+      z-index: 1000;
+    }
+    footer {
+      text-align: center;
+      background: #111;
+      padding: 20px;
+      margin-top: 60px;
+      font-size: 0.9em;
+    }
+    @media (max-width: 600px) {
+      .logo { font-size: 2em; }
+      .bienvenida { font-size: 1em; }
+      .menu { flex-direction: column; }
+      .menu button { width: 100%; }
+    }
+  </style>
 </head>
 <body>
-  <!-- Sección de autenticación -->
-  <section id="auth" class="seccion" style="display:block;">
-    <h2>Iniciar sesión o Registrarse</h2>
-    <div id="login-box">
-      <input type="email" id="login-email" placeholder="Email" />
-      <input type="password" id="login-pass" placeholder="Contraseña" />
-      <button onclick="login()">Ingresar</button>
-    </div>
-    <p>¿No tienes cuenta? <a href="#" onclick="showRegister()">Regístrate aquí</a></p>
-    <div id="register-box" style="display:none;">
-      <input type="email" id="register-email" placeholder="Email" />
-      <input type="password" id="register-pass" placeholder="Contraseña" />
-      <button onclick="register()">Registrarse</button>
-      <p><a href="#" onclick="showLogin()">¿Ya tienes cuenta? Inicia sesión</a></p>
-    </div>
-    <div id="auth-message"></div>
-  </section>
-
   <header>
     <video autoplay muted loop playsinline>
       <source src="https://www.w3schools.com/howto/rain.mp4" type="video/mp4" />
@@ -56,6 +178,77 @@
     WhatsApp: +598 091290479
   </footer>
 
-  <script src="script.js"></script>
+  <script>
+    const productos = {
+      novedades: [
+        { nombre: "Remera Fresh", precio: 1000, img: "https://via.placeholder.com/250", color: ["Negro","Blanco","Azul"], talle: ["S","M","L","XL"] },
+        { nombre: "Short Pro", precio: 850, img: "https://via.placeholder.com/250", color: ["Rojo","Negro","Gris"], talle: ["S","M","L","XL"] },
+        { nombre: "Musculosa Drop", precio: 900, img: "https://via.placeholder.com/250", color: ["Verde","Negro","Blanco"], talle: ["S","M","L"] },
+        { nombre: "Medias RAN", precio: 400, img: "https://via.placeholder.com/250", color: ["Blanco","Negro"], talle: ["Único"] }
+      ],
+      exclusive: [
+        { nombre: "Campera Elite", precio: 2500, img: "https://via.placeholder.com/250", color: ["Negro","Gris","Rojo"], talle: ["S","M","L","XL"] },
+        { nombre: "Pantalón Lux", precio: 2300, img: "https://via.placeholder.com/250", color: ["Gris","Negro"], talle: ["S","M","L"] },
+        { nombre: "Hoodie Neon", precio: 2000, img: "https://via.placeholder.com/250", color: ["Negro","Verde"], talle: ["S","M","L","XL"] },
+        { nombre: "Chaleco Wind", precio: 1800, img: "https://via.placeholder.com/250", color: ["Negro","Blanco"], talle: ["S","M","L"] }
+      ],
+      drop: [
+        { nombre: "Remera Limitada", precio: 1500, img: "https://via.placeholder.com/250", color: ["Negro","Blanco"], talle: ["S","M","L","XL"] },
+        { nombre: "Short edición Drop", precio: 1200, img: "https://via.placeholder.com/250", color: ["Negro","Rojo"], talle: ["S","M","L"] },
+        { nombre: "Campera Glow", precio: 2700, img: "https://via.placeholder.com/250", color: ["Negro","Lila"], talle: ["M","L","XL"] },
+        { nombre: "Musculosa Sport", precio: 1000, img: "https://via.placeholder.com/250", color: ["Azul","Negro"], talle: ["S","M","L"] }
+      ]
+    };
+
+    function mostrarSeccion(id) {
+      document.querySelectorAll(".seccion").forEach(s => s.style.display = "none");
+      const seccion = document.getElementById(id);
+      seccion.style.display = "block";
+      if (!seccion.innerHTML.trim()) {
+        let html = '<div class="productos">';
+        productos[id].forEach((p, i) => {
+          html += `
+          <div class="producto">
+            <img src="${p.img}" alt="${p.nombre}" />
+            <h3>${p.nombre}</h3>
+            <p>$${p.precio}</p>
+            <select id="${id}_color_${i}">${p.color.map(c => `<option>${c}</option>`).join("")}</select>
+            <select id="${id}_talle_${i}">${p.talle.map(t => `<option>${t}</option>`).join("")}</select>
+            <input type="number" id="${id}_cant_${i}" value="1" min="1" />
+            <select id="${id}_pago_${i}"><option>Efectivo</option><option>Transferencia</option><option>MercadoPago</option></select>
+            <button class="add-btn" onclick="agregarAlCarrito('${id}', ${i})">Agregar</button>
+          </div>`;
+        });
+        html += '</div>';
+        seccion.innerHTML = html;
+        window.scrollTo({ top: seccion.offsetTop, behavior: 'smooth' });
+      }
+    }
+
+    let carrito = [];
+    function agregarAlCarrito(tipo, index) {
+      const prod = productos[tipo][index];
+      const color = document.getElementById(`${tipo}_color_${index}`).value;
+      const talle = document.getElementById(`${tipo}_talle_${index}`).value;
+      const cant = document.getElementById(`${tipo}_cant_${index}`).value;
+      const pago = document.getElementById(`${tipo}_pago_${index}`).value;
+      carrito.push({ nombre: prod.nombre, color, talle, cant, pago });
+      alert("Producto agregado al carrito.");
+    }
+
+    function mostrarCarrito() {
+      const cart = document.getElementById("cart");
+      cart.style.display = cart.style.display === "block" ? "none" : "block";
+      const cont = document.getElementById("cartItems");
+      cont.innerHTML = carrito.map(c => `<p>${c.cant}x ${c.nombre} - ${c.color} - ${c.talle} - ${c.pago}</p>`).join('');
+    }
+
+    function finalizarCompra() {
+      if (carrito.length === 0) return alert("Tu carrito está vacío.");
+      const msg = encodeURIComponent("Hola, quiero comprar:\n" + carrito.map(c =>
+        `${c.cant}x ${c.nombre} - ${c.color} - ${c.talle} - ${c.pago}`).join('\n'));
+      window.open("https://wa.me/598091290479?text=" + msg, "_blank");
+    }
+  </script>
 </body>
 </html>
