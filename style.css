@@ -1,0 +1,142 @@
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background: #000;
+  color: #fff;
+}
+header {
+  position: relative;
+  height: 100vh;
+  text-align: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+header video {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+.logo {
+  font-size: 2.8em;
+  font-weight: bold;
+  text-shadow: 1px 1px 5px #000;
+}
+.bienvenida {
+  font-size: 1.2em;
+  margin: 10px 0 20px;
+  text-shadow: 1px 1px 5px #000;
+}
+.menu {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.menu button {
+  background: #111212;
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 8px;
+}
+.menu button:hover {
+  background: #101010;
+}
+.seccion {
+  display: none;
+  padding: 30px 10px;
+  animation: fadeIn 0.5s ease-in-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.productos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+.producto {
+  background: #111;
+  border-radius: 10px;
+  padding: 15px;
+  width: 90%;
+  max-width: 280px;
+  text-align: center;
+}
+.producto img {
+  width: 100%;
+  border-radius: 5px;
+}
+select, input, .add-btn {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+  border: none;
+  font-size: 1em;
+}
+.add-btn {
+  background: #171717;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+.add-btn:hover {
+  background: #0e0e0e;
+}
+.cart-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #101010;
+  border: none;
+  padding: 15px;
+  border-radius: 50%;
+  font-size: 1.5em;
+  cursor: pointer;
+  color: white;
+  z-index: 1000;
+}
+.cart-box {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  background: #222;
+  padding: 15px;
+  border-radius: 8px;
+  max-width: 90%;
+  max-height: 60vh;
+  overflow-y: auto;
+  display: none;
+  color: #fff;
+  z-index: 1000;
+}
+footer {
+  text-align: center;
+  background: #111;
+  padding: 20px;
+  margin-top: 60px;
+  font-size: 0.9em;
+}
+#profile-btn, #logout-btn {
+  z-index: 2000;
+}
+@media (max-width: 600px) {
+  .logo { font-size: 2em; }
+  .bienvenida { font-size: 1em; }
+  .menu { flex-direction: column; }
+  .menu button { width: 100%; }
+}
